@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Age Calculator</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-image: url(background.png);
+      background-size: cover;
+      background-position: center;
+      font-family: Arial, sans-serif;
+      margin-bottom: 40px;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      margin-top: 100px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      color: #4285F4;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      color: #555555;
+      font-size: 14px;
+      text-align: left;
+      margin-bottom: 5px;
+    }
+
+    input[type="date"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #CCCCCC;
+      border-radius: 4px;
+      font-size: 14px;
+      color: #333333;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    .watermark {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: black;
+      font-size: 12px;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Age Calculator</h1>
+    
+    <div class="form-group">
+      <label for="birthdate">Enter your birthdate:</label>
+      <input type="date" id="birthdate" class="form-control">
+    </div>
+    
+    <button onclick="calculateAge()" class="btn btn-primary">Calculate</button>
+    
+    <div id="result"></div>
+  </div>
+
+  <div class="watermark">Made By Nilam Direct Services ltd</div>
+
+  <script>
+    function calculateAge() {
+      var birthdate = document.getElementById('birthdate').value;
+      var birthdateObj = new Date(birthdate);
+      var now = new Date();
+
+      var ageInMillis = now - birthdateObj;
+
+      var years = Math.floor(ageInMillis / (1000 * 60 * 60 * 24 * 365));
+      var months = Math.floor((ageInMillis % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+      var days = Math.floor((ageInMillis % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((ageInMillis % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((ageInMillis % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((ageInMillis % (1000 * 60)) / 1000);
+      var milliseconds = ageInMillis % 1000;
+
+      var result = "You are " + years + " years, " + months + " months, " + days + " days, " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds, and " + milliseconds + " milliseconds old.";
+
+      document.getElementById('result').innerHTML = result;
+    }
+  </script>
+</body>
+</html>
