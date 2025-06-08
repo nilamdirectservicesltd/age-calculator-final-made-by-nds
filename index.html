@@ -3,79 +3,300 @@
 <head>
   <title>Age Calculator</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    @keyframes smoothAppear {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
     body {
-      background-image: url(background.png);
-      background-size: cover;
-      background-position: center;
-      font-family: Arial, sans-serif;
-      margin-bottom: 40px;
+      background-color: #FFF2D7;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: background-color 0.5s ease;
+      position: relative;
+      min-height: 100vh;
+    }
+    
+    body:hover {
+      background-color: #FFE0B5;
     }
 
     .container {
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 20px;
+      max-width: 450px;
+      margin: 20px auto;
+      padding: 30px;
       text-align: center;
-      background-color: rgba(255, 255, 255, 0.8);
-      border-radius: 10px;
-      margin-top: 100px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      background-color: #F8C794;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(216, 174, 126, 0.4);
+      animation: fadeIn 0.8s ease-out, float 6s ease-in-out infinite;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      flex: 1;
+    }
+    
+    .container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0)
+      );
+      transform: rotate(30deg);
+      pointer-events: none;
+    }
+    
+    .container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(216, 174, 126, 0.6);
     }
 
     h1 {
-      color: #4285F4;
-      margin-bottom: 20px;
+      color: #5E3A21;
+      margin-bottom: 30px;
+      font-weight: 600;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1s ease-out;
     }
 
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 25px;
+      text-align: left;
+      animation: fadeIn 1.2s ease-out;
+      position: relative;
     }
 
     label {
-      color: #555555;
-      font-size: 14px;
-      text-align: left;
-      margin-bottom: 5px;
+      color: #5E3A21;
+      font-size: 16px;
+      font-weight: 500;
+      display: block;
+      margin-bottom: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    label:hover {
+      transform: translateX(5px);
     }
 
     input[type="date"] {
       width: 100%;
-      padding: 10px;
-      border: 1px solid #CCCCCC;
-      border-radius: 4px;
-      font-size: 14px;
-      color: #333333;
+      padding: 12px 15px;
+      border: 2px solid #D8AE7E;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #5E3A21;
+      background-color: rgba(255, 255, 255, 0.7);
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%235E3A21" viewBox="0 0 16 16"><path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/></svg>');
+      background-size: contain;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    
+    input[type="date"]::-webkit-calendar-picker-indicator:hover {
+      transform: scale(1.1);
+    }
+    
+    input[type="date"]:focus {
+      outline: none;
+      border-color: #5E3A21;
+      background-color: white;
+      box-shadow: 0 0 0 3px rgba(216, 174, 126, 0.4);
+      transform: scale(1.01);
+    }
+    
+    input[type="date"]:hover {
+      transform: translateY(-2px);
     }
 
+    .button-group {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      animation: fadeIn 1.4s ease-out;
+    }
+    
     button {
-      padding: 10px 20px;
-      background-color: #4CAF50;
+      padding: 12px 30px;
+      background-color: #D8AE7E;
       color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 8px;
       cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+      flex: 1;
+    }
+    
+    button.refresh {
+      background-color: #C99D6B;
+      max-width: 50px;
+      padding: 12px;
+    }
+    
+    button.refresh:hover {
+      background-color: #B38A5D;
+    }
+    
+    button::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 5px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.5);
+      opacity: 0;
+      border-radius: 100%;
+      transform: scale(1, 1) translate(-50%);
+      transform-origin: 50% 50%;
+    }
+    
+    @keyframes ripple {
+      0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(20, 20);
+        opacity: 0;
+      }
     }
 
     button:hover {
-      background-color: #45a049;
+      background-color: #C99D6B;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    button:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    button:focus:not(:active)::after {
+      animation: ripple 1s ease-out;
     }
 
     #result {
-      margin-top: 20px;
-      font-weight: bold;
+      margin-top: 25px;
+      padding: 15px;
+      background-color: rgba(255, 255, 255, 0.6);
+      border-radius: 8px;
+      color: #5E3A21;
+      font-size: 16px;
+      line-height: 1.6;
+      transition: all 0.5s ease;
+      animation: fadeIn 1.6s ease-out;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    #result:hover {
+      background-color: rgba(255, 255, 255, 0.8);
+      transform: scale(1.02);
     }
 
     .watermark {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
       text-align: center;
-      color: black;
-      font-size: 12px;
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 10px 0;
+      color: #5E3A21;
+      font-size: 14px;
+      padding: 15px;
+      border-radius: 8px;
+      background-color: rgba(216, 174, 126, 0.3);
+      animation: fadeIn 2s ease-out;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-top: auto;
+    }
+    
+    .watermark:hover {
+      background-color: rgba(216, 174, 126, 0.5);
+      transform: translateY(-3px);
+    }
+    
+    .age-segment {
+      display: inline-block;
+      margin: 0 5px;
+      transition: all 0.3s ease;
+    }
+    
+    .age-segment:hover {
+      color: #C99D6B;
+      transform: scale(1.1);
+    }
+    
+    .refresh-icon {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.7s ease;
+    }
+    
+    button:hover .refresh-icon {
+      transform: rotate(360deg);
+    }
+    
+    .calendar-wrapper {
+      position: relative;
+    }
+    
+    .calendar-wrapper::after {
+      content: '▼';
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #5E3A21;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+    
+    input[type="date"]:focus + .calendar-wrapper::after {
+      transform: translateY(-50%) rotate(180deg);
     }
   </style>
 </head>
@@ -85,36 +306,125 @@
     
     <div class="form-group">
       <label for="birthdate">Enter your birthdate:</label>
-      <input type="date" id="birthdate" class="form-control">
+      <div class="calendar-wrapper">
+        <input type="date" id="birthdate" class="form-control">
+      </div>
     </div>
     
-    <button onclick="calculateAge()" class="btn btn-primary">Calculate</button>
+    <div class="button-group">
+      <button onclick="calculateAge()">Calculate Age</button>
+      <button onclick="refreshCalculator()" class="refresh" title="Refresh">
+        <svg class="refresh-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+          <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+        </svg>
+      </button>
+    </div>
     
     <div id="result"></div>
   </div>
 
-  <div class="watermark">Made By Nilam Direct Services ltd</div>
+  <div class="watermark">Made By Nilam Direct Services Ltd</div>
 
   <script>
     function calculateAge() {
       var birthdate = document.getElementById('birthdate').value;
+      if (!birthdate) {
+        document.getElementById('result').innerHTML = "Please enter a valid birthdate.";
+        return;
+      }
+      
+      // Add button click animation
+      var button = document.querySelector('button');
+      button.classList.add('clicked');
+      setTimeout(() => button.classList.remove('clicked'), 300);
+      
       var birthdateObj = new Date(birthdate);
       var now = new Date();
+      
+      // Add container pulse animation
+      var container = document.querySelector('.container');
+      container.style.animation = 'pulse 0.5s ease';
+      setTimeout(() => {
+        container.style.animation = 'fadeIn 0.8s ease-out, float 6s ease-in-out infinite';
+      }, 500);
 
       var ageInMillis = now - birthdateObj;
 
-      var years = Math.floor(ageInMillis / (1000 * 60 * 60 * 24 * 365));
-      var months = Math.floor((ageInMillis % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
-      var days = Math.floor((ageInMillis % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+      var years = Math.floor(ageInMillis / (1000 * 60 * 60 * 24 * 365.25));
+      var months = Math.floor((ageInMillis % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24 * 30.44));
+      var days = Math.floor((ageInMillis % (1000 * 60 * 60 * 24 * 30.44)) / (1000 * 60 * 60 * 24));
       var hours = Math.floor((ageInMillis % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       var minutes = Math.floor((ageInMillis % (1000 * 60 * 60)) / (1000 * 60));
       var seconds = Math.floor((ageInMillis % (1000 * 60)) / 1000);
       var milliseconds = ageInMillis % 1000;
 
-      var result = "You are " + years + " years, " + months + " months, " + days + " days, " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds, and " + milliseconds + " milliseconds old.";
-
-      document.getElementById('result').innerHTML = result;
+      var result = `You are 
+        <span class="age-segment">${years}</span> years, 
+        <span class="age-segment">${Math.floor(months)}</span> months, 
+        <span class="age-segment">${Math.floor(days)}</span> days, 
+        <span class="age-segment">${hours}</span> hours, 
+        <span class="age-segment">${minutes}</span> minutes, 
+        <span class="age-segment">${seconds}</span> seconds, and 
+        <span class="age-segment">${milliseconds}</span> milliseconds old.`;
+      
+      // Animate result appearance
+      var resultElement = document.getElementById('result');
+      resultElement.style.opacity = 0;
+      resultElement.style.transform = 'translateY(20px)';
+      resultElement.innerHTML = result;
+      
+      setTimeout(() => {
+        resultElement.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        resultElement.style.opacity = 1;
+        resultElement.style.transform = 'translateY(0)';
+      }, 50);
     }
+    
+    function refreshCalculator() {
+      // Add refresh animation
+      var refreshBtn = document.querySelector('.refresh');
+      refreshBtn.disabled = true;
+      
+      // Rotate icon
+      var refreshIcon = document.querySelector('.refresh-icon');
+      refreshIcon.style.transform = 'rotate(360deg)';
+      
+      // Clear inputs and result
+      document.getElementById('birthdate').value = '';
+      var resultElement = document.getElementById('result');
+      
+      // Fade out result
+      resultElement.style.transition = 'opacity 0.3s ease';
+      resultElement.style.opacity = 0;
+      
+      setTimeout(() => {
+        resultElement.innerHTML = '';
+        resultElement.style.opacity = 1;
+        refreshIcon.style.transform = 'rotate(0)';
+        refreshBtn.disabled = false;
+        
+        // Pulse the container
+        var container = document.querySelector('.container');
+        container.style.animation = 'pulse 0.5s ease';
+        setTimeout(() => {
+          container.style.animation = 'fadeIn 0.8s ease-out, float 6s ease-in-out infinite';
+        }, 500);
+      }, 300);
+    }
+    
+    // Add animation to elements when they come into view
+    document.addEventListener('DOMContentLoaded', function() {
+      const elements = document.querySelectorAll('.container, h1, .form-group, .button-group, .watermark');
+      
+      elements.forEach((el, index) => {
+        el.style.animationDelay = `${index * 0.1}s`;
+      });
+      
+      // Add hover effect to age segments after they're created
+      document.getElementById('birthdate').addEventListener('focus', function() {
+        this.style.animation = 'pulse 0.5s ease';
+      });
+    });
   </script>
 </body>
 </html>
